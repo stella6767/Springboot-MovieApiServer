@@ -83,14 +83,38 @@
           let medium_cover_image = movie.medium_cover_image;
 
           let newDiv = document.createElement("div");
+          newDiv.id = "card-" + movie.id;
           newDiv.className = "card";
           newDiv.style = "width:300px";
           // 백틱을 사용하면 템플릿 리터럴을 사용할 수 있다. ex) ${}
-          let cardImg = `<img class='card-img-top' src='${medium_cover_image}' alt='Card image'><div class='card-body'><h4 class='card-title'>${title}</h4><p class='card-text'>평점 ${rating}</p><button class='btn btn-danger'>영화 삭제</button></div>`;
+          let cardImg = `<img class='card-img-top' src='${medium_cover_image}' alt='Card image'><div class='card-body'><h4 class='card-title'>${title}</h4><p class='card-text'>평점 ${rating}</p><button class='btn btn-danger' onclick="deleteById(${movie.id})">영화 삭제</button></div>`;
           newDiv.innerHTML = cardImg;
 
           cardGrid.append(newDiv);
         }
+      }
+
+      function deleteById(movieId) {
+        // DB내용 삭제 없이 제거하기
+        let card = document.querySelector("#card-" + movieId);
+        card.parentElement.removeChild(card);
+
+        // 실제 DB내용 지우고 완료되면 제거하기
+        // fetch("http://localhost:8000/api/movie/" + movieId, {
+        //   method: "delete",
+        // })
+        //   .then(function (res) {
+        //     return res.text();
+        //   })
+        //   .then(function (res) {
+        //     if (res === "ok") {
+        //       alert("삭제성공");
+        //       let card = document.querySelector("#card-" + movieId);
+        //       card.parentElement.removeChild(card);
+        //     } else {
+        //       alert("삭제실패");
+        //     }
+        //   });
       }
     </script>
   </body>
